@@ -1,7 +1,5 @@
 package ramin.spring.recipeapp.springrecipeapp.domain;
 
-import ramin.spring.recipeapp.springrecipeapp.enums.MeasureUnits;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,10 +9,7 @@ public class UnitOfMeasure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private MeasureUnits unitOfMeasure;
-
-    @OneToOne
-    private Ingredient ingredient;
+    private String description;
 
     public Long getId() {
         return id;
@@ -24,19 +19,11 @@ public class UnitOfMeasure {
         this.id = id;
     }
 
-    public MeasureUnits getUnitOfMeasure() {
-        return unitOfMeasure;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUnitOfMeasure(MeasureUnits unitOfMeasure) {
-        this.unitOfMeasure = unitOfMeasure;
-    }
-
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
