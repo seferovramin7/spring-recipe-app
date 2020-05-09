@@ -1,31 +1,27 @@
 package ramin.spring.recipeapp.springrecipeapp.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+import ramin.spring.recipeapp.springrecipeapp.services.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ramin.spring.recipeapp.springrecipeapp.domain.Category;
-import ramin.spring.recipeapp.springrecipeapp.domain.UnitOfMeasure;
-import ramin.spring.recipeapp.springrecipeapp.repositories.CategoryRepository;
-import ramin.spring.recipeapp.springrecipeapp.repositories.UnitOfMeasureRepository;
 
-import java.util.Optional;
 
+@Slf4j
 @Controller
 public class IndexController {
 
-    private final CategoryRepository categoryRepository;
-    private final UnitOfMeasureRepository unitOfMeasureRepository;
+    private final RecipeService recipeService;
 
-    public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
 
-    @RequestMapping({"","/","/index","/index.html"})
-    public String getIndexPAge(){
-        Optional<Category> categoryOptional = categoryRepository.findByDescription("American");
-        Optional<UnitOfMeasure> optionalUnitOfMeasure = unitOfMeasureRepository.findByDescription("Tablespoon");
+    @RequestMapping({"", "/", "/index"})
+    public String getIndexPage(Model model) {
+        log.debug("getIndexPage method called in IndexController");
 
-        System.out.println(categoryOptional.get().getDescription() + " " + optionalUnitOfMeasure.get().getDescription() );
+        model.addAttribute("recipes", recipeService.getRecipes());
 
         return "index";
     }
